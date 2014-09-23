@@ -1,0 +1,11 @@
+# Install the openjdk package.
+- name: Install the package
+  apt:
+    pkg: "{{ java_ubuntu_saucy_jdk }}-{{ java_ubuntu_saucy_jdk_version }}-jdk"
+    state: present
+    update_cache: yes
+    force: yes
+
+# Cleanup.
+- name: Cleanup
+  shell: apt-get clean

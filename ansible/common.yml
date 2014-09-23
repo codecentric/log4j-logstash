@@ -1,0 +1,27 @@
+---
+ - name: Set up repeated on all of the Vagrant Boxes
+   hosts: all
+   sudo: yes
+   roles:
+   - role: ahazem.java_ubuntu_saucy
+     java_ubuntu_saucy_jdk: oracle
+     java_ubuntu_saucy_jdk_version: 8
+     java_ubuntu_saucy_jdk_version_default: 8
+ - name: Set up the tomcat machine
+   hosts: tomcat
+   sudo: yes
+   tasks: 
+   - name: Install Maven
+     apt: name="maven"
+   - name: Install Git
+     apt: name="git"
+   - name: Download Tomcat
+     get_url: url=http://apache.mirror.digionline.de/tomcat/tomcat-8/v8.0.12/bin/apache-tomcat-8.0.12.tar.gz dest=/tmp/apache-tomcat-8.0.12.tar.gz
+   - name: Create Tomcat Target Directory
+     file: path=/vagrant/local state=directory
+   - name: Extract Tomcat
+     unarchive: src=/tmp/apache-tomcat-8.0.12.tar.gz dest=/vagrant/local copy=no creates=/vagrant/local/apache-tomcat-8/bin/run.sh
+   - name: Chown Tomcat Installation
+     file: path=/vagrant/local/apache-tomcat-8.0.12 state=directory owner=vagrant group=vagrant
+   - name: SymLink Tomcat Installation
+     file: src=/vagrant/local/apache-tomcat-8.0.12 path=/vagrant/local/apache-tomcat-8 state=link

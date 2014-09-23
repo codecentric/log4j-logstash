@@ -1,0 +1,39 @@
+# Make sure python-pycurl is installed. 
+- name: Install python-pycurl
+  apt:
+    pkg: "python-pycurl"
+    state: present
+    update_cache: yes
+
+# Add the Webupd8 maintained PPA.
+- name: Add Webupd8 team PPA
+  apt_repository:
+    repo: 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu saucy main'
+    state: present
+
+# Automatically accept the license.
+- name: Accept Oracle license
+  shell: "echo debconf shared/accepted-oracle-license-v1-1 {{ item }} true | debconf-set-selections"
+  with_items:
+    - select
+    - seen
+
+# Install the oracle package.
+- name: Install the package
+  apt:
+    pkg: "{{ java_ubuntu_saucy_jdk }}-java{{ java_ubuntu_saucy_jdk_version }}-installer"
+    state: present
+    update_cache: yes
+    force: yes
+
+# Set as the default Java version. 
+- name: Set the default java version 
+  apt:
+    pkg: "{{ java_ubuntu_saucy_jdk }}-java{{ java_ubuntu_saucy_jdk_version }}-set-default"
+    state: present
+    update_cache: yes
+    force: yes
+
+# Clean up.
+- name: Clean up
+  shell: apt-get clean

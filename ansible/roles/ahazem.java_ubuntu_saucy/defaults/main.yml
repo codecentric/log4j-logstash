@@ -1,0 +1,4 @@
+---
+java_ubuntu_saucy_jdk: openjdk
+java_ubuntu_saucy_version: 7
+java_ubuntu_saucy_version_default: 7

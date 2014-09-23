@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Ahmed Hazem
+  description: Install Oracle/Open JDK on Ubuntu Saucy (13.10)
+  license: MIT 
+  min_ansible_version: 1.5
+  version: 0.0.1
+  platforms:
+  - name: Ubuntu
+    versions:
+     - saucy
+  categories:
+  - development
+  - system
+dependencies: []

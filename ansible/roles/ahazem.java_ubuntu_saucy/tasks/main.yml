@@ -1,0 +1,6 @@
+# Install the appropriate package.
+- include: oracle.yml
+  when: java_ubuntu_saucy_jdk == 'oracle'
+
+- include: openjdk.yml
+  when: java_ubuntu_saucy_jdk == 'openjdk'
