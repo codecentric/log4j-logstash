@@ -1,0 +1,13 @@
+---
+
+nginx_site: 
+  - file_name           : "{{kibana_fqdn}}"
+    blocks              :
+      - type            : server
+        server_name     :  "{{kibana_fqdn}}"
+        listen          : 80
+        location        : 
+          type          : location
+          name          : /
+          index         : "index.html"
+          alias         : "{{kibana_instal_dir}}/{{kibana_dir}}/src/"

@@ -1,5 +1,5 @@
 ---
- - name: Set up repeated on all of the Vagrant Boxes
+ - name: Install Java on all machines
    hosts: all
    sudo: yes
    roles:
@@ -25,3 +25,23 @@
      file: path=/vagrant/local/apache-tomcat-8.0.12 state=directory owner=vagrant group=vagrant
    - name: SymLink Tomcat Installation
      file: src=/vagrant/local/apache-tomcat-8.0.12 path=/vagrant/local/apache-tomcat-8 state=link
+   - name: Create Init Configuration
+     copy: src=files/tomcat dest=/etc/init.d/tomcat
+   - name: Make Init Configuration Executable
+     file: path=/etc/init.d/tomcat mode=0755
+   - name: Start Tomcat
+     service: name=tomcat state=started
+ - name: Set up logstash machine
+   hosts: logstash
+   sudo: yes
+   roles:
+   - role: nginx
+   - role: adham.helal.kibana
+     es_host: http://localhost:9200
+   tasks:
+   - name: Add Logstash Key
+     apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
+   - name: Add Logstash Repository
+     apt_repository: repo=' deb http://packages.elasticsearch.org/logstash/1.3/debian stable main' state=present
+   - name: Install Logstash
+     apt: name=logstash state=present update_cache=yes

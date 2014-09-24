@@ -1,0 +1,45 @@
+---
+
+- name: main | Create directories for kibana
+  file: 
+    path="{{item}}"
+    state=directory
+  with_items:
+    - "{{kibana_base_dir}}"
+    - "{{kibana_source_dir}}"
+    - "{{kibana_instal_dir}}"
+
+- name: main | Fetch kibana tar.gz
+  get_url: 
+    url="{{kibana_url}}"
+    dest="{{kibana_source_dir}}/{{kibana_tar}}"
+  register: kibana_download
+
+- name: main | untar kibana tar.gz
+  unarchive: 
+    src="{{kibana_source_dir}}/{{kibana_tar}}"
+    dest="{{kibana_instal_dir}}"
+    copy=no
+  when: kibana_download | changed
+
+- name: main | Create working link
+  file: 
+    src="{{kibana_instal_dir}}/{{kibana_dir}}"
+    dest="{{kibana_install_link}}"
+    state=link
+  when: kibana_download | changed
+
+- name: main | Deploy kibana config.js
+  template: 
+    src=config.js.j2 
+    dest="{{kibana_www_dir}}/config.js" 
+    mode=0644 
+    owner=root 
+    group=root
+
+- name: main | Deploy my dashboards
+  copy:
+    src="{{item.src}}"
+    dest="{{kibana_dashboard_dir}}/{{item.name}}"
+  with_items: kibana_dashboards
+  when: kibana_dashboard_inst
