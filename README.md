@@ -22,6 +22,8 @@ There are two vagrant machines available:
  Steps
  =====
  
+* git submodule init
+* git submodule update
 * vagrant up
 * vagrant ssh tomcat
 	* cd /vagrant/spring-petclinic/
@@ -29,4 +31,5 @@ There are two vagrant machines available:
 	* cp /vagrant/spring-petclinic/target/petclinic.war /vagrant/local/apache-tomcat-8/webapps
 	* sudo service tomcat start
 	* exit
-* vagrant ssh logstash
+* vagrant ssh gatling
+	* /vagrant/local/gatling-2/bin/gatling.sh -sf /vagrant/gatling-test/

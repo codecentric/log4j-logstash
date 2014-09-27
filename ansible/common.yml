@@ -11,6 +11,8 @@
    hosts: gatling
    sudo: yes
    tasks: 
+   - name: Make sure local file exists
+     file: path=/vagrant/local state=directory
    - name: Install unzip 
      apt: name="unzip"
    - name: Download Gatling
@@ -36,6 +38,8 @@
        fields:
         type: petclinic-api
    tasks: 
+   - name: Make sure local file exists
+     file: path=/vagrant/local state=directory
    - name: Install Maven
      apt: name="maven"
    - name: Install Git
@@ -68,6 +72,8 @@
      - name: API Dashboard
        src: ../kibana/api-dashboard.json
    tasks:
+   - name: Make sure local file exists
+     file: path=/vagrant/local state=directory
    - name: Add Logstash Key
      apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
    - name: Add Logstash Repository
