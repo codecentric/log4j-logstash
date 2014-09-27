@@ -40,4 +40,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "ansible/common.yml"
     end
   end
+
+  config.vm.define :gatling do |gatling|
+    gatling.vm.hostname = "gatling"
+    
+    gatling.vm.network :private_network, ip: "192.168.5.4"
+    
+    gatling.vm.provision :ansible do |ansible|
+      ansible.playbook = "ansible/common.yml"
+    end
+  end
 end

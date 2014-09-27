@@ -19,4 +19,14 @@ There are two vagrant machines available:
 * Catalina Home will be in /vagrant/local/apache-tomcat-8 to allow modification via the HOST
 * Tomcat is installed as a service and can be started / stopped via: sudo service tomcat XXX
 
+ Steps
+ =====
  
+* vagrant up
+* vagrant ssh tomcat
+	* cd /vagrant/spring-petclinic/
+	* mvn clean install
+	* cp /vagrant/spring-petclinic/target/petclinic.war /vagrant/local/apache-tomcat-8/webapps
+	* sudo service tomcat start
+	* exit
+* vagrant ssh logstash

@@ -8,7 +8,7 @@ import io.gatling.jdbc.Predef._
 class RecordedSimulation extends Simulation {
 
 	val httpProtocol = http
-		.baseURL("http://localhost:8080")
+		.baseURL("http://192.168.5.2:8080")
 		.inferHtmlResources(BlackList(""".*\.js""", """.*\.css""", """.*\.gif""", """.*\.jpeg""", """.*\.jpg""", """.*\.ico""", """.*\.woff""", """.*\.(t|o)tf""", """.*\.png"""), WhiteList())
 		.acceptHeader("""text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8""")
 		.acceptEncodingHeader("""gzip,deflate,sdch""")
@@ -26,9 +26,9 @@ class RecordedSimulation extends Simulation {
 	val headers_10 = Map(
 		"""Accept-Encoding""" -> """gzip,deflate""",
 		"""Cache-Control""" -> """max-age=0""",
-		"""Origin""" -> """http://localhost:8080""")
+		"""Origin""" -> """http://192.168.5.2:8080""")
 
-    val uri1 = """http://localhost:8080/petclinic"""
+    val uri1 = """http://192.168.5.2:8080/petclinic"""
 
 	val scn = scenario("RecordedSimulation")
 		// start
